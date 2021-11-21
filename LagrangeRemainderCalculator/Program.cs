@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.IO;
 using Expr = MathNet.Symbolics.SymbolicExpression;
 
@@ -6,16 +7,19 @@ namespace LagrangeRemainderCalculator
 {
     class Program
     {
-        private static Interval _interval = new Interval(-0.5m, 0.5m);
+        private static Interval _interval = new(-0.5m, 0.5m);
         private static decimal _x = 0.4m;
 
         static int Main()
         {
             Expr function = null;
+            Expr taylor = null;
 
             try
             {
-                function = ParseFunction("function.txt");
+                var (Function, Taylor) = ParseFunctions("functions.json");
+                function = Function;
+                taylor = Taylor;
             }
             catch (IOException ioException)
             {
@@ -44,7 +48,7 @@ namespace LagrangeRemainderCalculator
             HandleMainMenuLabel:
                 try
                 {
-                    Console.Write("Your input: ");
+                    Console.Write("Your input (actions): ");
                     int choice = int.Parse(Console.ReadLine());
 
                     switch (choice)
@@ -56,7 +60,7 @@ namespace LagrangeRemainderCalculator
                             Console.WriteLine("3. [-0,001; 0,001]");
 
                         IntervalSelectionLabel:
-                            Console.Write("Your input: ");
+                            Console.Write("Your input (interval): ");
                             try
                             {
                                 int intervalChoice = int.Parse(Console.ReadLine());
@@ -86,7 +90,7 @@ namespace LagrangeRemainderCalculator
                             }
                             break;
                         case 2:
-                            Console.Write("Your input: ");
+                            Console.Write("Your input (x): ");
 
                             HandleXChoice:
                                 try
@@ -103,12 +107,20 @@ namespace LagrangeRemainderCalculator
 
                             break;
                         case 3:
-                            var remainder = lagrangeRemainderCalculator.CalculateRemainder(
+                            var lagrangeRemainder = lagrangeRemainderCalculator.CalculateRemainder(
                                function,
                                _interval,
-                               _x,
-                               10);
-                            PrintCalculatorMessage($"remainder calculated successfuly: {remainder}");
+                               _x);
+
+                            var trueRemainder = lagrangeRemainderCalculator.CalculateTrueRemainder(
+                                function,
+                                taylor,
+                                _interval,
+                                _x);
+
+                            PrintCalculatorMessage($"Lagrange remainder calculated successfuly: {lagrangeRemainder}");
+                            PrintCalculatorMessage($"true remainder calculated successfuly: {trueRemainder}");
+                            PrintCalculatorMessage($"error: {Math.Abs(trueRemainder-lagrangeRemainder)}");
                             break;
                         case 4:
                             return 0;
@@ -135,16 +147,24 @@ namespace LagrangeRemainderCalculator
             return 0;
         }
 
-        private static Expr ParseFunction(string filePath)
+        private static (Expr Function, Expr Taylor) ParseFunctions(string filePath)
         {
-            var functionAsString = File.ReadAllText(filePath);
+            var functionsAsJson = JObject.Parse(File.ReadAllText(filePath));
 
-            if (string.IsNullOrEmpty(functionAsString))
+            var function = functionsAsJson["function"].ToString();
+            var taylor = functionsAsJson["taylor"].ToString();
+
+            if (string.IsNullOrEmpty(function))
             {
                 throw new ArgumentException("Function is not provided");
             }
 
-            return Expr.Parse(functionAsString);
+            if (string.IsNullOrEmpty(taylor))
+            {
+                throw new ArgumentException("Taylor expression is not provided");
+            }
+
+            return (Expr.Parse(function), Expr.Parse(taylor));
         }
 
         private static void PrintCalculatorMessage(string message)
