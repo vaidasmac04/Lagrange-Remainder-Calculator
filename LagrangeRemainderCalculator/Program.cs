@@ -7,7 +7,6 @@ namespace LagrangeRemainderCalculator
 {
     class Program
     {
-        private static Interval _interval = new(-0.5m, 0.5m);
         private static decimal _x = 0.4m;
 
         static int Main()
@@ -37,13 +36,13 @@ namespace LagrangeRemainderCalculator
 
             ShowMainMenuLabel:
                 Console.WriteLine("***********************************************************");
-                Console.WriteLine($"Current selection: interval - {_interval}, x = {_x}");
+                Console.WriteLine($"Current selection: x = {_x}");
                 Console.WriteLine("***********************************************************");
-
-                Console.WriteLine("1. Change interval");
-                Console.WriteLine("2. Change x");
-                Console.WriteLine("3. Calculate remainder");
-                Console.WriteLine("4. Close program");
+                Console.WriteLine();
+                Console.WriteLine("Actions:");
+                Console.WriteLine("1. Change x");
+                Console.WriteLine("2. Calculate remainder");
+                Console.WriteLine("3. Close program");
 
             HandleMainMenuLabel:
                 try
@@ -54,42 +53,6 @@ namespace LagrangeRemainderCalculator
                     switch (choice)
                     {
                         case 1:
-                            Console.WriteLine("Choose interval: ");
-                            Console.WriteLine("1. [-0,5; 0,5]");
-                            Console.WriteLine("2. [-0,1; 0,1]");
-                            Console.WriteLine("3. [-0,001; 0,001]");
-
-                        IntervalSelectionLabel:
-                            Console.Write("Your input (interval): ");
-                            try
-                            {
-                                int intervalChoice = int.Parse(Console.ReadLine());
-
-                                switch (intervalChoice)
-                                {
-                                    case 1:
-                                        _interval = new Interval(-0.5m, 0.5m);
-                                        break;
-                                    case 2:
-                                        _interval = new Interval(-0.1m, 0.1m);
-                                        break;
-                                    case 3:
-                                        _interval = new Interval(-0.001m, 0.001m);
-                                        break;
-                                    default:
-                                        PrintCalculatorMessage("interval selection failed. Try again.");
-                                        goto IntervalSelectionLabel;
-                                }
-
-                                PrintCalculatorMessage("interval selected successfuly");
-                            }
-                            catch (FormatException)
-                            {
-                                PrintCalculatorMessage("interval selection failed. Try again.");
-                                goto IntervalSelectionLabel;
-                            }
-                            break;
-                        case 2:
                             Console.Write("Your input (x): ");
 
                             HandleXChoice:
@@ -106,16 +69,14 @@ namespace LagrangeRemainderCalculator
                             PrintCalculatorMessage("x value selected successfuly");
 
                             break;
-                        case 3:
+                        case 2:
                             var lagrangeRemainder = lagrangeRemainderCalculator.CalculateRemainder(
                                function,
-                               _interval,
                                _x);
 
                             var trueRemainder = lagrangeRemainderCalculator.CalculateTrueRemainder(
                                 function,
                                 taylor,
-                                _interval,
                                 _x);
 
                             PrintCalculatorMessage($"Lagrange remainder calculated successfuly: {lagrangeRemainder}");
@@ -137,6 +98,7 @@ namespace LagrangeRemainderCalculator
                 catch (ArgumentException argumentException) 
                 {
                     PrintCalculatorMessage(argumentException.Message);
+                    Console.WriteLine();
                     goto ShowMainMenuLabel;
                 }
 

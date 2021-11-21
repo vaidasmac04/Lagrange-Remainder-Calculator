@@ -14,12 +14,13 @@ namespace LagrangeRemainderCalculator
 
         public decimal CalculateRemainder(
             Expr function, 
-            Interval interval,
             decimal x,
             int stepCount = 10)
         {
 
-            if(_x0 <= interval.Start || _x0 >= interval.End)
+            var interval = ChooseInterval((double)x);
+
+            if (_x0 <= interval.Start || _x0 >= interval.End)
             {
                 throw new ArgumentException($"Wrong interval provided: point x0 = '{_x0}' " +
                     $"must be in ({interval.Start};{interval.End})");
@@ -79,7 +80,6 @@ namespace LagrangeRemainderCalculator
         public decimal CalculateTrueRemainder(
             Expr function, 
             Expr taylor, 
-            Interval interval, 
             decimal x, 
             int stepCount = 10)
         {
@@ -92,6 +92,27 @@ namespace LagrangeRemainderCalculator
             var taylorValue = taylor.Evaluate(variables);
 
             return (decimal)Math.Abs(trueValue.RealValue - taylorValue.RealValue);
+        }
+
+        private static Interval ChooseInterval(double x)
+        {
+            x = Math.Abs(x);
+
+            if (x <= 0.001)
+            {
+                return new Interval(-0.001m, 0.001m);
+            }
+            else if (x <= 0.1)
+            {
+                return new Interval(-0.1m, 0.1m);
+            }
+            else if (x <= 0.5)
+            {
+                return new Interval(-0.5m, 0.5m);
+            }
+
+            throw new ArgumentException($"x = {x} is out of range");
+
         }
     }
 }
