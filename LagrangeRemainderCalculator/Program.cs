@@ -53,9 +53,9 @@ namespace LagrangeRemainderCalculator
                     switch (choice)
                     {
                         case 1:
-                            Console.Write("Your input (x): ");
-
                             HandleXChoice:
+                                Console.Write("Your input (x): ");
+
                                 try
                                 {
                                     _x = decimal.Parse(Console.ReadLine());
@@ -83,7 +83,7 @@ namespace LagrangeRemainderCalculator
                             PrintCalculatorMessage($"true remainder calculated successfuly: {trueRemainder}");
                             PrintCalculatorMessage($"error: {Math.Abs(trueRemainder-lagrangeRemainder)}");
                             break;
-                        case 4:
+                        case 3:
                             return 0;
                         default:
                             PrintCalculatorMessage("action selection failed. Try again.");
