@@ -20,18 +20,6 @@ namespace LagrangeRemainderCalculator
 
             var interval = ChooseInterval((double)x);
 
-            if (_x0 <= interval.Start || _x0 >= interval.End)
-            {
-                throw new ArgumentException($"Wrong interval provided: point x0 = '{_x0}' " +
-                    $"must be in ({interval.Start};{interval.End})");
-            }
-
-            if(x < interval.Start || x > interval.End)
-            {
-                throw new ArgumentException($"Wrong point provided: x = '{x}' " +
-                   $"must be in [{interval.Start};{interval.End}]");
-            }
-
             Interval newInterval = null;
             if (x < _x0)
             {
