@@ -1,9 +1,4 @@
-﻿using MathNet.Symbolics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace LagrangeRemainderCalculator
 {
@@ -26,6 +21,11 @@ namespace LagrangeRemainderCalculator
             }
 
             _end = end;
+        }
+
+        public override string ToString()
+        {
+            return $"[{_start};{_end}]";
         }
     }
 }
