@@ -10,6 +10,13 @@ namespace LagrangeRemainderCalculator
             Expr function, 
             Interval interval,
             decimal x,
-            int stepCount);
+            int stepCount = 10);
+
+        decimal CalculateTrueRemainder(
+            Expr function,
+            Expr taylor,
+            Interval interval,
+            decimal x,
+            int stepCount = 10);
     }
 }

@@ -8,7 +8,9 @@ namespace LagrangeRemainderCalculator
 {
     public class LagrangeRemainderCalculator : ILagrangeRemainderCalculator
     {
-        private readonly decimal _x0 = 0;
+        private readonly static decimal _x0 = 0;
+        private readonly static string _variableName = "x";
+        private readonly static Expr _variable = Expr.Variable(_variableName);
 
         public decimal CalculateRemainder(
             Expr function, 
@@ -43,45 +45,53 @@ namespace LagrangeRemainderCalculator
                 return 0;
             }
 
+            var results = new List<decimal>();
+
             var intervalLength = Math.Abs(newInterval.End - newInterval.Start);
             var stepSize = intervalLength / stepCount;
 
             decimal currentIntervalPoint = x < _x0 ? newInterval.Start : newInterval.Start + stepSize;
-
-            var results = new List<decimal>();
             var end = x < _x0 ? newInterval.End : newInterval.End + stepSize;
+
+            var derivative = function;
+
+            for (int i = 1; i <= 6; i++)
+            {
+                derivative = derivative.Differentiate(_variable);
+            }
+
             while (currentIntervalPoint < end)
             {
-                var remainderValue = CalculateRemainder(function, currentIntervalPoint, x);
-                results.Add(remainderValue);
+                var variables = new Dictionary<string, FloatingPoint>
+                {
+                    { _variableName, (double)currentIntervalPoint }
+                };
+
+                var remainderValue = derivative.Evaluate(variables).RealValue / 720 * Math.Pow((double)x, 6);
+
+                results.Add((decimal)remainderValue);
                 currentIntervalPoint += stepSize;
             }
 
             return results.Max(i => i);
         }
 
-        private static decimal CalculateRemainder(
-            Expr function,
-            decimal currentIntervalPoint, 
-            decimal x)
+        public decimal CalculateTrueRemainder(
+            Expr function, 
+            Expr taylor, 
+            Interval interval, 
+            decimal x, 
+            int stepCount = 10)
         {
-            var variableName = "x";
-            var variable = Expr.Variable(variableName);
-            var derivative = function;
-
-            for (int i = 1; i <= 6; i++)
-            {
-                derivative = derivative.Differentiate(variable);
-            }
-
             var variables = new Dictionary<string, FloatingPoint>
             {
-                { variableName, (double)currentIntervalPoint }
+                { _variableName, (double)x }
             };
 
-            var result = derivative.Evaluate(variables).RealValue / 720 * Math.Pow((double)x, 6);
+            var trueValue = function.Evaluate(variables);
+            var taylorValue = taylor.Evaluate(variables);
 
-            return (decimal)result;
+            return (decimal)Math.Abs(trueValue.RealValue - taylorValue.RealValue);
         }
     }
 }
