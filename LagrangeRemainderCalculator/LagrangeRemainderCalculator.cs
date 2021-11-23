@@ -99,7 +99,7 @@ namespace LagrangeRemainderCalculator
                 return new Interval(-0.5m, 0.5m);
             }
 
-            throw new ArgumentException($"x = {x} is out of range");
+            throw new ArgumentException($"x = {x} nepriklauso reikšmėms tarp {-0.5} ir {0.5}");
 
         }
     }
