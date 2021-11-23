@@ -29,81 +29,81 @@ namespace LagrangeRemainderCalculator
                 Console.WriteLine(argumentException.Message);
             }
 
-            if (function != null)
+            if (function != null && taylor != null)
             {
                 ILagrangeRemainderCalculator lagrangeRemainderCalculator =
                     new LagrangeRemainderCalculator();
 
-            ShowMainMenuLabel:
-                Console.WriteLine("***********************************************************");
-                Console.WriteLine($"Current selection: x = {_x}");
-                Console.WriteLine("***********************************************************");
-                Console.WriteLine();
-                Console.WriteLine("Actions:");
-                Console.WriteLine("1. Change x");
-                Console.WriteLine("2. Calculate remainder");
-                Console.WriteLine("3. Close program");
+                ShowMainMenuLabel:
+                    Console.WriteLine("***********************************************************");
+                    Console.WriteLine($"Dabartinis pasirinkimas: x = {_x}");
+                    Console.WriteLine("***********************************************************");
+                    Console.WriteLine();
+                    Console.WriteLine("Galimi veiksmai:");
+                    Console.WriteLine("1. Pakeisti x");
+                    Console.WriteLine("2. Apskaičiuoti liekamąjį narį (Lagranžo forma)");
+                    Console.WriteLine("3. Baigti programą");
 
-            HandleMainMenuLabel:
-                try
-                {
-                    Console.Write("Your input (actions): ");
-                    int choice = int.Parse(Console.ReadLine());
-
-                    switch (choice)
+                HandleMainMenuLabel:
+                    try
                     {
-                        case 1:
-                            HandleXChoice:
-                                Console.Write("Your input (x): ");
+                        Console.Write("--> Jūsų pasirinkimas (veiksmas): ");
+                        int choice = int.Parse(Console.ReadLine());
 
-                                try
-                                {
-                                    _x = decimal.Parse(Console.ReadLine());
-                                }
-                                catch (FormatException)
-                                {
-                                    PrintCalculatorMessage("x value selection failed. Try again.");
-                                    goto HandleXChoice;
-                                }
+                        switch (choice)
+                        {
+                            case 1:
+                                HandleXChoice:
+                                    Console.Write("--> Jūsų pasirinkimas (x): ");
 
-                            PrintCalculatorMessage("x value selected successfuly");
+                                    try
+                                    {
+                                        _x = decimal.Parse(Console.ReadLine());
+                                    }
+                                    catch (FormatException)
+                                    {
+                                        PrintCalculatorMessage("x pasirinkti nepavyko. Bandykite dar kartą.");
+                                        goto HandleXChoice;
+                                    }
 
-                            break;
-                        case 2:
-                            var lagrangeRemainder = lagrangeRemainderCalculator.CalculateRemainder(
-                               function,
-                               _x);
+                                PrintCalculatorMessage("x pasirinktas sėkmingai");
 
-                            var trueRemainder = lagrangeRemainderCalculator.CalculateTrueRemainder(
-                                function,
-                                taylor,
-                                _x);
+                                break;
+                            case 2:
+                                var lagrangeRemainder = lagrangeRemainderCalculator.CalculateRemainder(
+                                   function,
+                                   _x);
 
-                            PrintCalculatorMessage($"Lagrange remainder calculated successfuly: {lagrangeRemainder}");
-                            PrintCalculatorMessage($"true remainder calculated successfuly: {trueRemainder}");
-                            PrintCalculatorMessage($"error: {Math.Abs(trueRemainder-lagrangeRemainder)}");
-                            break;
-                        case 3:
-                            return 0;
-                        default:
-                            PrintCalculatorMessage("action selection failed. Try again.");
-                            break;
+                                var trueRemainder = lagrangeRemainderCalculator.CalculateTrueRemainder(
+                                    function,
+                                    taylor,
+                                    _x);
+
+                                PrintCalculatorMessage($"Liekamasis narys (Lagranžo forma): {lagrangeRemainder}");
+                                PrintCalculatorMessage($"Tikslusis liekamasis narys: {trueRemainder}");
+                                PrintCalculatorMessage($"Paklaida: {Math.Abs(trueRemainder-lagrangeRemainder)}");
+                                break;
+                            case 3:
+                                return 0;
+                            default:
+                                PrintCalculatorMessage("Veiksmo pasirinkti nepavyko. Bandykite dar kartą.");
+                                break;
+                        }
                     }
-                }
-                catch (FormatException)
-                {
-                    PrintCalculatorMessage("action selection failed. Try again.");
-                    goto HandleMainMenuLabel;
-                }
-                catch (ArgumentException argumentException) 
-                {
-                    PrintCalculatorMessage(argumentException.Message);
+                    catch (FormatException)
+                    {
+                        PrintCalculatorMessage("Veiksmo pasirinkti nepavyko. Bandykite dar kartą.");
+                        goto HandleMainMenuLabel;
+                    }
+                    catch (ArgumentException argumentException) 
+                    {
+                        PrintCalculatorMessage(argumentException.Message);
+                        Console.WriteLine();
+                        goto ShowMainMenuLabel;
+                    }
+
                     Console.WriteLine();
                     goto ShowMainMenuLabel;
-                }
-
-                Console.WriteLine();
-                goto ShowMainMenuLabel;
             }
 
             return 0;
@@ -118,12 +118,12 @@ namespace LagrangeRemainderCalculator
 
             if (string.IsNullOrEmpty(function))
             {
-                throw new ArgumentException("Function is not provided");
+                throw new ArgumentException("Klaida. Funkcija nepateikta.");
             }
 
             if (string.IsNullOrEmpty(taylor))
             {
-                throw new ArgumentException("Taylor expression is not provided");
+                throw new ArgumentException("Klaida. Teiloro eilutė nepateikta.");
             }
 
             return (Expr.Parse(function), Expr.Parse(taylor));
@@ -131,7 +131,7 @@ namespace LagrangeRemainderCalculator
 
         private static void PrintCalculatorMessage(string message)
         {
-            Console.WriteLine($"--> Calculator: {message}");
+            Console.WriteLine($"--> {message}");
         }
     }
 }
