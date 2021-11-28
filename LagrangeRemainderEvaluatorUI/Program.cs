@@ -54,6 +54,8 @@ namespace LagrangeRemainderEvaluatorUI
                 }
             }
 
+            Console.ReadLine();
+
             return 0;
         }
 
