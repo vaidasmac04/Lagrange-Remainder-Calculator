@@ -1,9 +1,10 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using LagrangeRemainder;
+using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using Expr = MathNet.Symbolics.SymbolicExpression;
 
-namespace LagrangeRemainderCalculator
+namespace LagrangeRemainderCalculatorUI
 {
     class Program
     {
@@ -87,7 +88,7 @@ namespace LagrangeRemainderCalculator
                                 return 0;
                             default:
                                 PrintCalculatorMessage("Veiksmo pasirinkti nepavyko. Bandykite dar kartą.");
-                                break;
+                                goto HandleMainMenuLabel;
                         }
                     }
                     catch (FormatException)
