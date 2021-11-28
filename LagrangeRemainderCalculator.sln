@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LagrangeRemainderCalculator", "LagrangeRemainderCalculator\LagrangeRemainderCalculator.csproj", "{BA3A5C4C-3809-4B8C-856F-C2EA8C702AE0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LagrangeRemainderEvaluatorUI", "LagrangeRemainderEvaluatorUI\LagrangeRemainderEvaluatorUI.csproj", "{3D1771A2-E092-4151-BF21-723C9938622B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LagrangeRemainderCalculatorUI", "LagrangeRemainderCalculatorUI\LagrangeRemainderCalculatorUI.csproj", "{AD9561CA-D1FD-490A-A226-A8F8BD42154A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LagrangeRemainder", "LagrangeRemainder\LagrangeRemainder.csproj", "{F02572FF-88C4-469C-BC56-C34E1CF76EBB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BA3A5C4C-3809-4B8C-856F-C2EA8C702AE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BA3A5C4C-3809-4B8C-856F-C2EA8C702AE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BA3A5C4C-3809-4B8C-856F-C2EA8C702AE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BA3A5C4C-3809-4B8C-856F-C2EA8C702AE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D1771A2-E092-4151-BF21-723C9938622B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D1771A2-E092-4151-BF21-723C9938622B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D1771A2-E092-4151-BF21-723C9938622B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D1771A2-E092-4151-BF21-723C9938622B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD9561CA-D1FD-490A-A226-A8F8BD42154A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD9561CA-D1FD-490A-A226-A8F8BD42154A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD9561CA-D1FD-490A-A226-A8F8BD42154A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD9561CA-D1FD-490A-A226-A8F8BD42154A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F02572FF-88C4-469C-BC56-C34E1CF76EBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F02572FF-88C4-469C-BC56-C34E1CF76EBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F02572FF-88C4-469C-BC56-C34E1CF76EBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F02572FF-88C4-469C-BC56-C34E1CF76EBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
