@@ -49,8 +49,10 @@ namespace LagrangeRemainderEvaluatorUI
 
                 foreach(var evaluationResult in evaluationResults)
                 {
-                    Console.WriteLine($"Intervalas: {evaluationResult.Interval}, " +
-                        $"Lagranžo liekamasis narys: {evaluationResult.Remainder}");
+                    Console.WriteLine(
+                        $"Intervalas: {evaluationResult.Interval}\n" +
+                        $"Lagranžo liekamasis narys: {evaluationResult.Remainder}\n" +
+                        $"Intervalo taškas, kuriame įgyjama didžiausia reikšmė: {evaluationResult.MaxValueAt}\n\n");
                 }
             }
 

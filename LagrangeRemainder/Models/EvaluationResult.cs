@@ -5,5 +5,8 @@
         public decimal Remainder { get; init;  }
 
         public Interval Interval { get; init; }
+
+        public decimal MaxValueAt { get; init; }
+
     }
 }

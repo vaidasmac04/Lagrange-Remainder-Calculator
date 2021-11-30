@@ -124,9 +124,10 @@ namespace LagrangeRemainder
                 var stepSize = intervalLength / stepCount;
                 var currentIntervalPoint = evaluationInterval.Start;
                 decimal maxRemainderValue = 0;
+                decimal maxRemainderValueAt = 0;
                 var derivative = GetDerivative(function, 6);
 
-                while (currentIntervalPoint < evaluationInterval.End)
+                while (currentIntervalPoint < evaluationInterval.End + stepSize)
                 {
                     var variables = new Dictionary<string, FloatingPoint>
                     {
@@ -134,11 +135,12 @@ namespace LagrangeRemainder
                     };
 
                     var remainderValue = (decimal)(derivative.Evaluate(variables).RealValue / 720 
-                        * Math.Pow((double)evaluationInterval.MaxDerivativeValueX, 6));
+                        * Math.Pow((double)evaluationInterval.X, 6));
 
                     if (remainderValue > maxRemainderValue)
                     {
                         maxRemainderValue = remainderValue;
+                        maxRemainderValueAt = currentIntervalPoint;
                     }
 
                     currentIntervalPoint += stepSize;
@@ -148,7 +150,8 @@ namespace LagrangeRemainder
                     new EvaluationResult
                     {
                         Interval = evaluationInterval,
-                        Remainder = maxRemainderValue
+                        Remainder = maxRemainderValue,
+                        MaxValueAt = maxRemainderValueAt
                     });
             }
 

@@ -2,20 +2,20 @@
 {
     public class EvaluationInterval : Interval
     {
-        private decimal _maxDerivativeValueX;
+        private decimal _x;
 
-        public decimal MaxDerivativeValueX 
+        public decimal X
         { 
-            get => _maxDerivativeValueX; 
-            set => _maxDerivativeValueX = value; 
+            get => _x; 
+            set => _x = value; 
         }
 
         public EvaluationInterval(
             decimal start, 
             decimal end, 
-            decimal maxDerivativeValueX) : base(start, end)
+            decimal x) : base(start, end)
         {
-            _maxDerivativeValueX = maxDerivativeValueX;
+            _x = x;
         }
     }
 }
